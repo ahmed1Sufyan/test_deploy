@@ -8,7 +8,7 @@ import { logoutUser, setUser } from "../Config/redux/reducer/userSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   // Redux se user & token lo
   const user = useSelector((state) => state.user.user);
   const accessToken = useSelector((state) => state.user.accessToken);
@@ -22,7 +22,6 @@ const Navbar = () => {
     }
   }, [accessToken]);
 
-
   const fetchUser = async (token) => {
     try {
       const response = await axios.get(
@@ -33,19 +32,21 @@ const Navbar = () => {
         }
       );
 
-      dispatch(setUser({
-        user: response.data,  // ✅ Pure user data Redux me bhejo
-        accessToken: token
-      }));
+      dispatch(
+        setUser({
+          user: response.data, // ✅ Pure user data Redux me bhejo
+          accessToken: token,
+        })
+      );
     } catch (error) {
-         console.log(error);  
+      console.log(error);
     }
   };
 
   const userLogout = async () => {
     try {
       console.log("Logging out...");
-      
+
       await axios.post(
         "https://bloging-app-server.vercel.app/api/v1/auth/logout",
         {},
@@ -56,11 +57,11 @@ const Navbar = () => {
           withCredentials: true, // Cookies send karne ke liye
         }
       );
-      
+
       dispatch(logoutUser()); // Redux se user hatao
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userId");
-      
+
       Swal.fire({
         title: "Success!",
         text: "You have been logged out successfully.",
@@ -68,7 +69,7 @@ const Navbar = () => {
         confirmButtonText: "OK",
         confirmButtonColor: "#234e94",
       });
-      
+
       navigate("/login");
     } catch (error) {
       console.error("Logout Error:", error);
@@ -90,10 +91,17 @@ const Navbar = () => {
       </div>
       <div className="flex-none gap-2">
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
             <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-300">
               <img
-                src={ user?.user?.profilePicture || "https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2470054311.jpg"}
+                src={
+                  user?.user?.profilePicture ||
+                  "https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2470054311.jpg"
+                }
                 alt="User Avatar"
                 className="w-full h-full object-cover"
               />
@@ -120,7 +128,7 @@ const Navbar = () => {
               </>
             ) : (
               <li className="text-center">
-                <Link to="/Login">Login</Link>
+                <Link to="/register">Register</Link>
               </li>
             )}
           </ul>
