@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./index.css";
-import Layout from "./Layout.jsx";
+import Layout from "./layout.jsx";
 import Home from "./pages/Home.jsx";
 // import Login from "./pages/Login.jsx";
 // import Register from './pages/Register.jsx'
