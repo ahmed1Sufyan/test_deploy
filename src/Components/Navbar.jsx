@@ -20,8 +20,9 @@ const Navbar = () => {
     if (storedToken && storedUserId) {
       fetchUser(storedToken);
     }
-  }, [accessToken]);
+  }, [accessToken, fetchUser]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchUser = async (token) => {
     try {
       const response = await axios.get(
